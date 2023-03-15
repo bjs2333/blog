@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>微信小程序打包</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.992cb7aa.css" as="style"><link rel="preload" href="/assets/js/app.9b1f7ca2.js" as="script"><link rel="preload" href="/assets/js/2.7b588dac.js" as="script"><link rel="preload" href="/assets/js/14.67044ab0.js" as="script"><link rel="prefetch" href="/assets/js/10.a5d61d9c.js"><link rel="prefetch" href="/assets/js/11.2374212a.js"><link rel="prefetch" href="/assets/js/12.57f61d31.js"><link rel="prefetch" href="/assets/js/13.3bf9952e.js"><link rel="prefetch" href="/assets/js/15.54b3e5eb.js"><link rel="prefetch" href="/assets/js/3.3f9dd631.js"><link rel="prefetch" href="/assets/js/4.6fd1ef01.js"><link rel="prefetch" href="/assets/js/5.da37f56e.js"><link rel="prefetch" href="/assets/js/6.d09cb291.js"><link rel="prefetch" href="/assets/js/7.21ffcab6.js"><link rel="prefetch" href="/assets/js/8.d14094be.js"><link rel="prefetch" href="/assets/js/9.9fabe3cf.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.992cb7aa.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><div class="custom-block tip"><p class="custom-block-title">介绍</p> <p>微信小程序项目打包上线流程</p></div> <h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>一个微信小程序项目经过构建，最终到完成上线时项目，最后一步便是分包。</p> <p>分包的目的是为了进一步优化，以满足微信小程序上线和用户体验等，需要将小程序项目进行分包加载：即对小程序划分成不同的子包。</p> <p>阅读微信官方文档（文档目录位置：开发/指南/基础能力/分包加载），可以发现官方对项目总大小和子包大小进行了限制。</p> <details class="custom-block details"><summary>文档引用</summary> <p>目前小程序分包大小有以下限制：</p> <ul><li>整个小程序所有分包大小不超过 20M</li> <li>单个分包/主包大小不能超过 2M</li></ul> <p>对小程序进行分包，可以优化小程序首次启动的下载时间，以及在多团队共同开发时可以更好的解耦协作。</p></details> <p>可以从上面官方原话看出，分包的目的不仅仅是因为官方对其做出了限制，同时是为了提升用户体验。</p> <p>当用户在第一次使用某个小程序时，通常不需要一个其完整功能，而是浏览大致功能后再决定是否进行使用。在用户第一次使用时，用户会下载小程序文件到本地，才可以运行起来，这时候首次加载不会让感觉到卡顿、小程序体积庞大等，是至关重要的。</p> <p>因此通过分包，划分主包，第一次只加载主包等关键子包，将会是一次至关重要的优化。</p> <p>本文只针对最基本的分包进行教学，深入和一些细节需要自行阅读官方文档。</p> <h1 id="打包流程"><a href="#打包流程" class="header-anchor">#</a> 打包流程</h1> <h2 id="目录配置"><a href="#目录配置" class="header-anchor">#</a> 目录配置</h2> <details class="custom-block details"><summary>官方假设目录</summary> <div class="language-text extra-class"><pre class="language-text"><code>├── app.js
+├── app.json
+├── app.wxss
+├── packageA
+│   └── pages
+│       ├── cat
+│       └── dog
+│   └── assets
+│       └── images
+│   └── components
+│       └── tail
+├── packageB
+│   └── pages
+│       ├── apple
+│       └── banana
+├── pages
+│   ├── index
+│   └── logs
+└── utils
+</code></pre></div></details> <h2 id="一、目录划分"><a href="#一、目录划分" class="header-anchor">#</a> 一、目录划分</h2> <ul><li>pages：主包</li> <li>packageA、packageB：子包</li></ul> <p>这里直接将需要划分为子包的在根目录下新建一个文件夹，然后在其内部创建 <code>pages</code> ，把子包页面放在里面即可。</p> <p>子包划分不限于 <code>pages</code> ，同时 <code>component、assets</code> 等都可以划分到里面。</p> <h2 id="二、文件配置"><a href="#二、文件配置" class="header-anchor">#</a> 二、文件配置</h2> <p>通过上面的文件结构划分 ，已经抽离出了主包和子包。具体抽离后的子包大小可以在微信小程序开发者工具右上角的 <strong>详情/基本信息/本地代码</strong> 中查看。</p> <p>分包后，需要对子包中所有可能影响到的路径进行修改，避免路径错误。</p> <p>随后，在 app.json <code>subpackages</code> 字段声明项目分包结构</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;pages&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;pages/index&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;pages/logs&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;subpackages&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;root&quot;</span><span class="token operator">:</span> <span class="token string">&quot;packageA&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;pages&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;pages/cat&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;pages/dog&quot;</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;root&quot;</span><span class="token operator">:</span> <span class="token string">&quot;packageB&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;pack2&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;pages&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;pages/apple&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;pages/banana&quot;</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><details class="custom-block details"><summary>subpackages 各配置项说明</summary> <table><thead><tr><th>字段</th> <th>类型</th> <th>说明</th></tr></thead> <tbody><tr><td>root</td> <td>String</td> <td>分包根目录</td></tr> <tr><td>name</td> <td>String</td> <td>分包别名，<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages/preload.html" target="_blank" rel="noopener noreferrer">分包预下载<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>时可以使用</td></tr> <tr><td>pages</td> <td>StringArray</td> <td>分包页面路径，相对于分包根目录</td></tr> <tr><td>independent</td> <td>Boolean</td> <td>分包是否独立分包</td></tr></tbody></table></details> <p>配置完后，我们发现，主包大小依旧过过于庞大。因此需要再对项目进行文件进行分隔。</p> <p>首当其冲的，就是静态资源。在一个项目中，往往一个图片可能就比一个页面的代码文件还要大，因此对图片也进行必要的分包处理是必要的。</p> <p>对静态资源进行分包后，子包目录结构理应如下：</p> <details class="custom-block details"><summary>子包目录结构</summary> <div class="language- extra-class"><pre class="language-text"><code>├── packageA
+│   └── pages
+│       ├── cat
+│       └── dog
+│   └── assets
+│       └── images
+│   └── components
+│       └── tail
+</code></pre></div></details> <h2 id="三、压缩文件体积"><a href="#三、压缩文件体积" class="header-anchor">#</a> 三、压缩文件体积</h2> <p>在借助第三方包的情况下，通常会使一个项目的体积变得庞大。而我们并不是需要每个包的所有功能，因此需要对导入的包不需要的部分进行删除，即进行体积压缩。</p> <p>但是通常情况下，微信小程序并不会自动压缩包的体积，即无法自动做到按需引入。因此需要手动压缩包。</p> <p>手动压缩方法：以 vant UI 为例，找到直接使用的组件在包的位置，其所在的文件夹不能删除，然后阅读其 js 和 json 文件，可以找到间接依赖的文件，那些文件所在的文件夹也不能删除。以此类推即可。</p> <p>暂未知自动压缩或者更好的方法。</p> <h2 id="四、版本上传"><a href="#四、版本上传" class="header-anchor">#</a> 四、版本上传</h2> <p>分包就绪后，就可以上传小程序了。</p> <p>上传方法：微信开发者工具右上角 <strong>上传</strong> ，点击后即可上传。</p> <p>上传成功后，进入<a href="https://mp.weixin.qq.com/wxamp/wacodepage/getcodepage?token=859243386&amp;lang=zh_CN" target="_blank" rel="noopener noreferrer">小程序开发网站<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。然后进入 管理/开发管理/开发版本 ，即可查看成功提交的版本信息。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.9b1f7ca2.js" defer></script><script src="/assets/js/2.7b588dac.js" defer></script><script src="/assets/js/14.67044ab0.js" defer></script>
+  </body>
+</html>

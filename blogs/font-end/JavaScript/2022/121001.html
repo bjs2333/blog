@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JS中使用#region折叠代码</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.992cb7aa.css" as="style"><link rel="preload" href="/assets/js/app.9b1f7ca2.js" as="script"><link rel="preload" href="/assets/js/2.7b588dac.js" as="script"><link rel="preload" href="/assets/js/10.a5d61d9c.js" as="script"><link rel="prefetch" href="/assets/js/11.2374212a.js"><link rel="prefetch" href="/assets/js/12.57f61d31.js"><link rel="prefetch" href="/assets/js/13.3bf9952e.js"><link rel="prefetch" href="/assets/js/14.67044ab0.js"><link rel="prefetch" href="/assets/js/15.54b3e5eb.js"><link rel="prefetch" href="/assets/js/3.3f9dd631.js"><link rel="prefetch" href="/assets/js/4.6fd1ef01.js"><link rel="prefetch" href="/assets/js/5.da37f56e.js"><link rel="prefetch" href="/assets/js/6.d09cb291.js"><link rel="prefetch" href="/assets/js/7.21ffcab6.js"><link rel="prefetch" href="/assets/js/8.d14094be.js"><link rel="prefetch" href="/assets/js/9.9fabe3cf.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.992cb7aa.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><div class="custom-block tip"><p class="custom-block-title">介绍</p> <p>折叠、展开代码，优化编码体验</p></div> <h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>当一个文件中代码行数过多时，即使再简单的业务逻辑阅读起来也会让人头疼。为了提高代码可读性，就需要对代码进行优化。</p> <p>在对代码进行优化时，可以对代码进行进行函数封装、模块化等操作。</p> <p>但在微信小程序开发和 vue2 等使用 options API 进行开发的框架，或者工具模块的封装等，即使对一些逻辑进行抽离封装，也无法避免内容过多导致可读性降低，而 #region 可以一定程度避免这种现象产生。</p> <h2 id="正文"><a href="#正文" class="header-anchor">#</a> 正文</h2> <p>在文章开头，我使用写过的一个微信小程序项目中的一个 page 里的 js 文件进行引出，下面为该文件的大致内容</p> <p><img src="https://blog.joyxin.top/image/screenShot/121001_01.png" alt="普通代码结构"></p> <p>也许看到上面这些代码，并不会让你感到头疼，这是因为代码已经进行了层次分明的划分，且代码较少。</p> <p>现在我们阅读起来上面的代码并不会有问题，但是如果代码多起来了呢。如果你对一个文件里的逻辑都能做到层次分明的划分时，这时候这个文件里有着二三十个函数，这时候当进行代码的编写修改，无疑会花费一些时间在找对应代码上。</p> <p>在很多语言中，都存在 <code>#region</code> 与 <code>#endregion</code> ，可以折叠两者其中的任意代码包括注释，下面展示 <code>#region</code> 对代码结构划分起到的作用：</p> <p><img src="https://blog.joyxin.top/image/screenShot/121001_02.png" alt="region折叠代码"></p> <p>我们可以看到，使用 <code>#region</code> 后可以一眼看出来某个区域对应的功能，而且每个区域里的代码的作用都是类似，因此可以对代码进行分类划分，这样对于我们编写代码的过程中，可以对代码进行优化。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.9b1f7ca2.js" defer></script><script src="/assets/js/2.7b588dac.js" defer></script><script src="/assets/js/10.a5d61d9c.js" defer></script>
+  </body>
+</html>
